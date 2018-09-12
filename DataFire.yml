@@ -3,3 +3,8 @@ options:
 actions:
   sendmail: ./actions/sendmail.js
 tasks: {}
+paths:
+  /contact:
+    post:
+      action: sendmail
+      accounts: {}
