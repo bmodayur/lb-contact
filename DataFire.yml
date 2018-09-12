@@ -1,0 +1,4 @@
+options:
+  cors: true
+actions:
+  sendmail: ./actions/sendmail.js
