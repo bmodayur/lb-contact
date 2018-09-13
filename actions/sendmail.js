@@ -6,6 +6,7 @@ let google_gmail = require('@datafire/google_gmail').actions;
 
 var encodedErrorMessage = "";
 var encodedMessage = "";
+var encodedFailedMessage = "";
 var actionContext = "";
 var actionInput = "";
 
@@ -78,6 +79,14 @@ module.exports = new datafire.Action({
       subject: "New notification for LaunchBottle from " + input.email,
       body: "Message: Error sending message",
     }, actionContext);
+    
+    encodedFailedMessage = await google_gmail.buildMessage({
+      to: "study@launchbottle.com",
+      from: input.email,
+      subject: "New notification for LaunchBottle from " + input.email,
+      body: "RECAPTCHA FAILED Message: " + input.message + " \nPhone number: " + input.phone
+      + "\n\t recaptcha-response: " + captchaurl,
+    }, actionContext);
         
     
     
@@ -96,7 +105,7 @@ module.exports = new datafire.Action({
                 
                   }
                   else{
-                	sendError(encodedErrorMessage, actionContext);    
+                	sendError(encodedFailedMessage, actionContext);    
 				  }
                 }
               	
