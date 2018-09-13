@@ -117,7 +117,7 @@ module.exports = new datafire.Action({
                   }
                   else{
                     
-                	sendError(encodedFailedMessage, actionContext, recaptchaResponse);    
+                	sendError(encodedFailedMessage, actionContext, result);    
 				  }
                 }
               	
