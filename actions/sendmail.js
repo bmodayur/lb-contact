@@ -18,7 +18,7 @@ function sendError(encMsg, context, responseBody){
     encodedFailedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: actionInput.email,
-      subject: "New notification for LaunchBottle from " + actionInput.email,
+      subject: "Unauthorized notification for LaunchBottle from " + actionInput.email,
       body: "RECAPTCHA FAILED Message: " + actionInput.message + " \nPhone number: " + actionInput.phone
       + "\n" + "Response Body: " + responseBody,
     }, actionContext);
