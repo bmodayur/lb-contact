@@ -9,11 +9,31 @@ var encodedMessage = "";
 var actionContext = "";
 var actionInput = "";
 
-function sendError(){
+function sendError(encMsg, context){
+  (async () => {
+
+   let message = await google_gmail.users.messages.send({
+      			body: {
+        			raw: encMsg,
+      			},
+    			}, context);
+    
+   })();
+  
 }
 
-function sendMessage() {
+function sendMessage(encMsg, context) {
+  (async () => {
+
+   let message = await google_gmail.users.messages.send({
+      			body: {
+        			raw: encMsg,
+      			},
+    			}, context);
+    
+   })();
   
+ 			  
 }
 
 module.exports = new datafire.Action({
@@ -65,12 +85,12 @@ module.exports = new datafire.Action({
 	await request.get(captchaurl, function(err, response, body) {
       	if (err) {     
          
-				sendError();    
+				sendError(encodedErrorMessage, actionContext);    
  
      		 }
 			else{
       	// it worked! We can now trust our data from the form
-        		sendMessage();
+        		sendMessage(encodedMessage, actionContext);
  
      	 }
     	}) ;
