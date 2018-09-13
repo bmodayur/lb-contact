@@ -19,13 +19,13 @@ function sendError(encMsg, context, responseBody){
       to: "study@launchbottle.com",
       from: actionInput.email,
       subject: "New notification for LaunchBottle from " + actionInput.email,
-      body: "RECAPTCHA FAILED Message: " + actionInput.message + " \nPhone number: " + input.phone
-      + "\n\t recaptcha-response: " + captchaurl + "\n" + "Response Body: " + responseBody,
+      body: "RECAPTCHA FAILED Message: " + actionInput.message + " \nPhone number: " + actionInput.phone
+      + "\n" + "Response Body: " + responseBody,
     }, actionContext);
     
    let message = await google_gmail.users.messages.send({
       			body: {
-        			raw: encMsg,
+        			raw: encodedFailedMessage,
       			},
     			}, context);
     
@@ -110,7 +110,7 @@ module.exports = new datafire.Action({
      		 }
 			else{
       			if (response.statusCode == 200){
-                  let result = JSON.parse(body);
+                  let result = JSON.parse(recaptchaResponse);
                   if (result.success == 'true'){
                     sendMessage(encodedMessage, actionContext);
                 
