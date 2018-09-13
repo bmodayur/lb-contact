@@ -4,6 +4,17 @@ let request = require("request");
 
 let google_gmail = require('@datafire/google_gmail').actions;
 
+var encodedErrorMessage = "";
+var encodedMessage = "";
+var actionContext = "";
+var actionInput = "";
+
+function sendError(){
+}
+
+function sendMessage() {
+  
+}
 
 module.exports = new datafire.Action({
   inputs: [{
@@ -25,15 +36,15 @@ module.exports = new datafire.Action({
   }],
   handler: async (input, context) => {
   
-	 let actionContext = context;    
-	 let actionInput = input;
+	 actionContext = context;    
+	 actionInput = input;
 	 
     let secret = "6LfqAGMUAAAAAMEU-_prKZC4xkf-MYlYKnOYv4Aa";
     let captchaurl = "https://www.google.com/recaptcha/api/siteverify?secret="
     + secret + "&response=" + input["g-recaptcha-response"];
     
     
-    let encodedMessage = await google_gmail.buildMessage({
+    encodedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: input.email,
       subject: "New notification for LaunchBottle from " + input.email,
@@ -41,28 +52,29 @@ module.exports = new datafire.Action({
       + "\n\t recaptcha-response: " + captchaurl,
     }, actionContext);
     
-    
-    let message = await google_gmail.users.messages.send({
-      body: {
-        raw: encodedMessage,
-      },
+	encodedErrorMessage = await google_gmail.buildMessage({
+      to: "study@launchbottle.com",
+      from: input.email,
+      subject: "New notification for LaunchBottle from " + input.email,
+      body: "Message: Error sending message",
     }, actionContext);
- 
-
-    /*
+        
+    
+    
+    
 	await request.get(captchaurl, function(err, response, body) {
       	if (err) {     
          
-    
-    			return "Error in recaptcha!";
-       
+				sendError();    
+ 
      		 }
 			else{
       	// it worked! We can now trust our data from the form
-          	return "Your note has been sent.";
+        		sendMessage();
+ 
      	 }
     	}) ;
-    */
+    
        
     return "Thanks for your note." ;
   },
