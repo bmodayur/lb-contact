@@ -89,16 +89,18 @@ module.exports = new datafire.Action({
  
      		 }
 			else{
-      			
-              	// it worked! We can now trust our data from the form
-        		if (body.success == 'true'){
-              		sendMessage(encodedMessage, actionContext);
+      			if (response.statusCode == 200){
+                  let result = JSON.parse(body);
+                  if (result.success == 'true'){
+                    sendMessage(encodedMessage, actionContext);
+                
+                  }
+                  else{
+                	sendError(encodedErrorMessage, actionContext);    
+				  }
                 }
-              	else {
-					sendError(encodedErrorMessage, actionContext);    
-
-                }
-     	 }
+              	
+     	 	}
     	}) ;
     
        
