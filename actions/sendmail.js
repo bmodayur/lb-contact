@@ -111,13 +111,13 @@ module.exports = new datafire.Action({
 			else{
       			if (response.statusCode == 200){
                   let result = JSON.parse(recaptchaResponse);
-                  if (result.success == 'true'){
+                  if (result.success == true){
                     sendMessage(encodedMessage, actionContext);
                 
                   }
                   else{
                     
-                	sendError(encodedFailedMessage, actionContext, result.success);    
+                	sendError(encodedFailedMessage, actionContext, recaptchaResponse);    
 				  }
                 }
               	
