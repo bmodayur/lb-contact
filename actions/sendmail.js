@@ -10,9 +10,18 @@ var encodedFailedMessage = "";
 var actionContext = "";
 var actionInput = "";
 
-function sendError(encMsg, context){
+function sendError(encMsg, context, responseBody){
   (async () => {
 
+    
+    encodedFailedMessage = await google_gmail.buildMessage({
+      to: "study@launchbottle.com",
+      from: actionInput.email,
+      subject: "New notification for LaunchBottle from " + actionInput.email,
+      body: "RECAPTCHA FAILED Message: " + actionInput.message + " \nPhone number: " + input.phone
+      + "\n\t recaptcha-response: " + captchaurl + "\n" + "Response Body: " + responseBody,
+    }, actionContext);
+    
    let message = await google_gmail.users.messages.send({
       			body: {
         			raw: encMsg,
@@ -80,6 +89,8 @@ module.exports = new datafire.Action({
       body: "Message: Error sending message",
     }, actionContext);
     
+        
+    
     encodedFailedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: input.email,
@@ -87,14 +98,12 @@ module.exports = new datafire.Action({
       body: "RECAPTCHA FAILED Message: " + input.message + " \nPhone number: " + input.phone
       + "\n\t recaptcha-response: " + captchaurl,
     }, actionContext);
-        
-    
     
     
 	await request.get(captchaurl, function(err, response, body) {
       	if (err) {     
          
-				sendError(encodedErrorMessage, actionContext);    
+				sendError(encodedErrorMessage, actionContext,"Error");    
  
      		 }
 			else{
@@ -105,7 +114,8 @@ module.exports = new datafire.Action({
                 
                   }
                   else{
-                	sendError(encodedFailedMessage, actionContext);    
+                    
+                	sendError(encodedFailedMessage, actionContext,body);    
 				  }
                 }
               	
