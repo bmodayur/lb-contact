@@ -9,6 +9,7 @@ var encodedMessage = "";
 var encodedFailedMessage = "";
 var actionContext = "";
 var actionInput = "";
+var recaptchaResponse = "";
 
 function sendError(encMsg, context, responseBody){
   (async () => {
@@ -101,7 +102,8 @@ module.exports = new datafire.Action({
     
     
 	await request.get(captchaurl, function(err, response, body) {
-      	if (err) {     
+      recaptchaResponse = body;	
+      if (err) {     
          
 				sendError(encodedErrorMessage, actionContext,"Error");    
  
@@ -115,7 +117,7 @@ module.exports = new datafire.Action({
                   }
                   else{
                     
-                	sendError(encodedFailedMessage, actionContext,body);    
+                	sendError(encodedFailedMessage, actionContext, recaptchaResponse);    
 				  }
                 }
               	
