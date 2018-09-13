@@ -80,7 +80,7 @@ module.exports = new datafire.Action({
       from: input.email,
       subject: "New notification for LaunchBottle from " + input.email,
       body: "Message: " + input.message + " \nPhone number: " + input.phone
-      + "\n\t recaptcha-response: " + captchaurl,
+      + "\n\t",
     }, actionContext);
     
 	encodedErrorMessage = await google_gmail.buildMessage({
