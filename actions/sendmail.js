@@ -18,7 +18,7 @@ function sendError(encMsg, context, responseBody){
     encodedFailedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: actionInput.email,
-      subject: "Unauthorized notification for LaunchBottle from " + actionInput.email,
+      subject: "Unauthorized notification for Early Markers from " + actionInput.email,
       body: "RECAPTCHA FAILED Message: " + actionInput.message + " \nPhone number: " + actionInput.phone
       + "\n" + "Response Body: " + responseBody,
     }, actionContext);
@@ -78,7 +78,7 @@ module.exports = new datafire.Action({
     encodedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: input.email,
-      subject: "New notification for LaunchBottle from " + input.email,
+      subject: "New notification for Early Markers from " + input.email,
       body: "Message: " + input.message + " \nPhone number: " + input.phone
       + "\n\t",
     }, actionContext);
@@ -86,7 +86,7 @@ module.exports = new datafire.Action({
 	encodedErrorMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: input.email,
-      subject: "New notification for LaunchBottle from " + input.email,
+      subject: "New notification for Early Markers from " + input.email,
       body: "Message: Error sending message",
     }, actionContext);
     
@@ -95,7 +95,7 @@ module.exports = new datafire.Action({
     encodedFailedMessage = await google_gmail.buildMessage({
       to: "study@launchbottle.com",
       from: input.email,
-      subject: "New notification for LaunchBottle from " + input.email,
+      subject: "New notification for Early Markers from " + input.email,
       body: "RECAPTCHA FAILED Message: " + input.message + " \nPhone number: " + input.phone
       + "\n\t recaptcha-response: " + captchaurl,
     }, actionContext);
